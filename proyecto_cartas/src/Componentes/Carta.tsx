@@ -19,7 +19,7 @@ tipo,
 }: Props    
 ) {
  return (
-    <div className="flex flex-col items-center bg-red-700 border-4 rounded-lg w-90 font-mono text-orange-100 ">
+    <div className="flex flex-col items-center">
     <h3>
         {nombre} (#{numero})
     </h3>

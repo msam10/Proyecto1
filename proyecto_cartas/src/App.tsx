@@ -5,7 +5,7 @@ function App() {
   
   return (
     <div className="bg-linear-to-r from-cyan-500 to-blue-500 flex flex-wrap gap-6 p-8 bg-gray-100 justify-center min-h-screen">
-    
+    <div className="bg-red-700 border-4 rounded-lg w-90 font-mono text-orange-100">
     <Cartadetalle 
     ataque={4500}
     nombre="Luffy"
@@ -14,9 +14,11 @@ function App() {
     imagen="https://preview.redd.it/what-makes-luffy-such-a-likable-protagonist-v0-lhdd2872qurb1.jpg?width=320&crop=smart&auto=webp&s=214ccf69b93d7c4ce7001b19c9d1bbd12ec98ba2"
     tipo="capitan/pirata"
     numero={1}
-
+    
     />
-
+    </div>
+    
+    <div className="bg-green-700 border-4 rounded-lg w-90 font-mono text-orange-100">
     <Cartadetalle 
     ataque={3800}
     nombre="Zoro"
@@ -27,7 +29,10 @@ function App() {
     numero={2}
     
     />
+    </div>
 
+
+    <div className="bg-blue-900 border-4 rounded-lg w-90 font-mono text-orange-100">
     <Cartadetalle 
     ataque={4200}
     nombre="Garp"
@@ -38,7 +43,9 @@ function App() {
     numero={3}
     
     />
+    </div>
 
+    <div className="bg-blue-500 border-4 rounded-lg w-90 font-mono text-orange-100">
     <Cartadetalle 
     ataque={4100}
     nombre="Aokiji"
@@ -47,9 +54,8 @@ function App() {
     imagen="https://i.pinimg.com/1200x/0d/8d/f7/0d8df738229467a385b9441026b4f660.jpg"
     tipo="Marine/Almirante/Logia."
     numero={4}
-    
     />
-
+    </div>
    
 
 
