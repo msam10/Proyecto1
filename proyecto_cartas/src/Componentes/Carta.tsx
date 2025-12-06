@@ -1,3 +1,6 @@
+
+
+
 type Props = {
 numero : number;
 nombre : string;
@@ -6,6 +9,7 @@ ataque :number;
 defensa : number;
 descripcion : string;
 imagen : string;
+
 };
 
 function Cartadetalle ({
@@ -16,19 +20,20 @@ imagen,
 nombre,
 numero,
 tipo,
+
 }: Props    
 ) {
  return (
-    <div className="flex flex-col items-center">
-    <h3>
+    <div className="flex flex-col items-center" onClick={() => mostrarDetalle()}>
+    <h3 className="text-3xl">
         {nombre} (#{numero})
     </h3>
-    <img className="w-80 h-80 border-3 border-dashed rounded-sm border-blue-500" src={imagen} alt={nombre} />
+    <img className="w-90 h-90 border-3 border-dashed rounded-sm border-blue-500" src={imagen} alt={nombre} />
  
-     <p className="pl-5 pr-5  text-center" >ataque:{ataque}</p>
-      <p className="pl-5 pr-5 text-center" >defensa:{defensa}</p>
-      <p  className="pl-5 pr-5 text-center" >descripcion:{descripcion}</p>
-      <p className="pl-5 pr-5 text-center">tipo:{tipo}</p>
+     <p className="pl-5 pr-5  text-center text-2xl" >Ataque:{ataque}</p>
+      <p className="pl-5 pr-5 text-center text-2xl" >Defensa:{defensa}</p>
+       <p className="pl-5 pr-5 text-center text-2xl" >Descripcion:{descripcion}</p>
+      <p className="pl-5 pr-5 text-center text-2xl">Tipo:{tipo}</p>
 
     </div>
  )
