@@ -58,6 +58,9 @@ function App() {
   const [personajeSeleccionado, setPersonajeSeleccionado] =
     useState<IPersonaje | null>(null);
 
+    const [busqueda,setBusqueda] =
+    useState("");
+
   const handleCardClick = (personaje: IPersonaje) => {
     setPersonajeSeleccionado(personaje);
   };
@@ -67,12 +70,22 @@ function App() {
   };
 
   return (
-    <div className="bg-linear-to-r from-cyan-500 to-blue-500 flex flex-wrap gap-6 p-8 bg-gray-100 justify-center min-h-screen">
-      {personajes.map((personaje) => (
+    <div className="bg-linear-to-r from-cyan-500 to-blue-500  bg-gray-100  min-h-screen">
+      <input
+            type="text"
+            onChange={(e)=>{setBusqueda(e.target.value)}}
+          className="bg-blue-950 pt-5 justify-center flex "
+             value={busqueda}
+          
+            > 
+        
+        </input>
+        <div className="flex flex-wrap gap-6 p-8 justify-center">
+      {personajes.filter((personajes) =>personajes.nombre.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())).map((personaje) => (
         <div
           key={personaje.numero}
-          className="bg-gradient-to-r from-green-400 to-blue-500  border-4 rounded-lg w-110 font-mono text-white"
-        >
+          className="bg-linear-to-r from-green-400 to-blue-500  border-4 rounded-lg w-110 font-mono text-white"
+        >  
           <Cartadetalle
             ataque={personaje.ataque}
             nombre={personaje.nombre}
@@ -83,7 +96,7 @@ function App() {
           />
         </div>
       ))}
-
+</div>
       {personajeSeleccionado && (
         <Modal
           descripcion={personajeSeleccionado.descripcion}
