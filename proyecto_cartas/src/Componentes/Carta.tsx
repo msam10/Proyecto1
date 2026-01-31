@@ -22,7 +22,7 @@ function Cartadetalle({
         {nombre} (#{numero})
       </h3>
       <img
-        className="w-100 h-105 border-3 border-dashed rounded-sm border-red-500"
+        className="w-120 h-125 border-3 border-double rounded-lg border-blue-400"
         src={imagen}
         alt={nombre}
       />
