@@ -91,7 +91,7 @@ function App() {
                          transition-all overflow-hidden text-gray-800"
             >
             
-              <div className="overflow-hidden rounded-2xl shadow-md h-[88%]">
+            <div className="overflow-hidden rounded-2xl shadow-md h-[88%]">
                 <Cartadetalle
                   ataque={personaje.ataque}
                   defensa={personaje.defensa}
@@ -103,10 +103,10 @@ function App() {
 
               <div className="absolute bottom-4 left-0 w-full flex justify-between px-6 text-sm font-semibold text-gray-800">
                 <div className="bg-amber-200/80 px-3 py-1 pt-5 rounded-lg shadow-sm text-2xl">
-                   Ataque:{personaje.ataque}
+                   Ataque: {personaje.ataque}
                 </div>
-                <div className="bg-sky-200/80 px-3py-1  pt-5 rounded-lg shadow-sm text-2xl">
-                  Defensa:{personaje.defensa}
+                <div className="bg-sky-200/80 px-3 py-1  pt-5 rounded-lg shadow-sm text-2xl">
+                  Defensa: {personaje.defensa}
                 </div>
               </div>
             </div>
@@ -116,7 +116,7 @@ function App() {
       {personajeSeleccionado && (
         <Modal
           descripcion={personajeSeleccionado.descripcion}
-          tipo={personajeSeleccionado.tipo}
+          tipo= {personajeSeleccionado.tipo}
           ataque={personajeSeleccionado.ataque}
           defensa={personajeSeleccionado.defensa}
           imagen={personajeSeleccionado.imagen}
@@ -130,4 +130,3 @@ function App() {
 }
 
 export default App;
-

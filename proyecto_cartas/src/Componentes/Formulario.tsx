@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 function Formulario() {
   const [card,setCard] = useState({
    nombre:"",
@@ -160,25 +162,6 @@ function Formulario() {
         validar
       </button>
 
-      
-      
-      
-     
-      
-      
-      
-
-      
-
-
-    
-    
      </div>
-     
-    
-
-     ) }
-
-
-     
+     ) }  
 export default Formulario;
