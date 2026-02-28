@@ -6,10 +6,11 @@ interface IDetalle {
   numero: number;
   descripcion: string;
   tipo: string;
+  vida:number;
   onClose?: () => void;
 }
 
-const Modal = ({ descripcion, tipo, ataque, defensa, imagen, nombre, onClose }: IDetalle) => {
+const Modal = ({ descripcion, tipo, ataque, defensa, imagen, nombre, vida, onClose,}: IDetalle) => {
   return (
     <div className="fixed inset-0 bg-[rgba(0,0,0,0.83)] flex justify-center items-center p-8">
       <div className="relative w-[400px] h-[640px] bg-linear-to-br from-sky-100 via-amber-100 to-rose-100 

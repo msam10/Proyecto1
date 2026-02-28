@@ -1,7 +1,12 @@
 import { useState } from "react";
+import type { IPersonaje } from "../App";
+import { Link } from "react-router";
 
-function Formulario() {
-  const [card,setCard] = useState({
+
+function Formulario({agregarCarta}:{agregarCarta: (personaje: IPersonaje) => void,cantidadCartas:number}) {
+
+
+  const [card,setCard] = useState<IPersonaje>({
    nombre:"",
    descripcion:"",
    numero:0,
@@ -9,6 +14,8 @@ function Formulario() {
     ataque:0,
     defensa:0,
     imagen:"",
+    vida:0,
+    
   });
 
   const [errors,setErrors] = useState({
@@ -19,7 +26,19 @@ function Formulario() {
     ataque:"",
     defensa:"",
     imagen:"",
+    
 });
+
+
+ const CrearCarta =() =>{
+
+ 
+
+
+
+ }
+
+
 
  const validateCard = (): boolean => {
       let flag = true;
@@ -70,6 +89,7 @@ function Formulario() {
         defensa:defensaError,
         imagen:imagenError,
         numero:'',
+        
       
       });
 
@@ -77,31 +97,35 @@ function Formulario() {
     };
 
     const handleSubmit = () => {
-    
+    console.log(validateCard());
      if(validateCard()){
       alert("enviando carta...");
+      agregarCarta(card)
      }
 
 
     };
 
-    <button
-     className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"
-     onClick={handleSubmit}
-    >
-      validar
-    </button>
 
    
 
 
   return (
+
      <div>
+      <Link to='/'>
+      <h1>Volver</h1>
+      </Link>
      <input type="text"
      placeholder="nombre"
      className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
      value={card.nombre}
      onChange={(e) => setCard({...card , nombre: e.target.value})}
+          onFocus={()=>{
+      setErrors({...errors, nombre :""})
+
+     }}
+
      />
 
      {errors.nombre && <p className="text-red-500">{errors.nombre}</p>}
@@ -111,6 +135,11 @@ function Formulario() {
      className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
      value={card.descripcion}
      onChange={(e) => setCard({...card , descripcion: e.target.value})}
+          onFocus={()=>{
+      setErrors({...errors, descripcion:""})
+
+     }}
+
       />
       {errors.descripcion && <p className="text-red-500">{errors.descripcion}</p>}
      
@@ -119,6 +148,11 @@ function Formulario() {
      className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
      value={card.numero}
      onChange={(e) => setCard({...card , numero:Number( e.target.value)})}
+          onFocus={()=>{
+      setErrors({...errors, numero:""})
+
+     }}
+
       /> 
       {errors.numero && <p className="text-red-500">{errors.numero}</p>}
 
@@ -127,6 +161,11 @@ function Formulario() {
      className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
      value={card.tipo}
      onChange={(e) => setCard({...card , tipo: e.target.value})}
+          onFocus={()=>{
+      setErrors({...errors, tipo:""})
+
+     }}
+
       /> 
       {errors.tipo && <p className="text-red-500">{errors.tipo}</p>}
 
@@ -135,6 +174,11 @@ function Formulario() {
      className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
      value={card.defensa}
      onChange={(e) => setCard({...card , defensa:Number( e.target.value)})}
+          onFocus={()=>{
+      setErrors({...errors, defensa:""})
+
+     }}
+
       />  
       {errors.defensa && <p className="text-red-500">¨{errors.defensa}</p>}
 
@@ -144,23 +188,33 @@ function Formulario() {
      className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
      value={card.ataque}
      onChange={(e) => setCard({...card , ataque:Number(e.target.value)})}
+          onFocus={()=>{
+      setErrors({...errors, ataque:""})
+
+     }}
+
       />
       {errors.ataque && <p className="text-red-500">{errors.ataque}</p>}
       
       <input type="text"
      placeholder="imagen"
      className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
+     onFocus={()=>{
+      setErrors({...errors, imagen:""})
+
+     }}
+
      value={card.imagen}
      onChange={(e) => setCard({...card , imagen: e.target.value})}
       />
       {errors.imagen && <p className="text-red-500">{errors.imagen}</p>}
+    <button
+     className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"
+     onClick={handleSubmit}
+    >
+      Crear 
+    </button>
 
-      <button
-      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      onClick={validateCard}
-      >
-        validar
-      </button>
 
      </div>
      ) }  
