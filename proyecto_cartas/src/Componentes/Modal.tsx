@@ -42,6 +42,7 @@ const Modal = ({ descripcion, tipo, ataque, defensa, imagen, nombre, vida, onClo
         <div className="text-center space-y-2 text-lg">
           <p><span className="font-semibold">Tipo:</span> {tipo}</p>
           <p><span className="font-semibold">Descripción:</span> {descripcion}</p>
+             <p><span className="font-semibold">Vida:</span> {vida}</p>
         </div>
 
        

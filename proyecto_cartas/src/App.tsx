@@ -1,23 +1,16 @@
 
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import Cartadetalle from "./Componentes/Carta";
 import Modal from "./Componentes/Modal";
 import { Route, Routes } from "react-router";
 import Home from "./pages/Home";
 import Formulario from "./pages/Formulario";
+import { toCartaMap, type iApiCarta, type IPersonaje } from "./Componentes/interfaces";
 
 
-export interface IPersonaje {
-  nombre: string;
-  ataque: number;
-  defensa: number;
-  imagen: string;
-  numero: number;
-  descripcion: string;
-  tipo: string;
-  vida:number;
+const API_URL = import.meta.env.VITE_PROYECTO_CARTAS_API;
 
-}
+
 
 const personajesDefault: IPersonaje[] = [
   {
@@ -70,6 +63,27 @@ const personajesDefault: IPersonaje[] = [
 function App() {
 
   const [personajes, setPersonajes] = useState(personajesDefault)
+  const [Loading, setLoading] = useState(false);
+
+  const fetchTask = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/card`,{headers:{usersecretpasskey:"Sama477355EZ"}}) ;
+      console.log("res", res);
+      const data = await res.json() as {data:iApiCarta[]}
+      setPersonajes(data.data.map(toCartaMap))
+    } catch (e) {
+      console.error("error fetching task", e);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchTask();
+  }, []);
+
+
+
 
  
 const  agregarCarta = (personaje:IPersonaje)=>{
@@ -87,7 +101,7 @@ setPersonajes(listaFiltrada)
   return (
      <div className="min-h-screen bg-linear-to-br from-amber-200 via-sky-200 to-amber-300 flex flex-col items-center py-12">
        <Routes>
-     <Route path='/' element={<Home  personajes={personajes}/>}/>
+     <Route path='/' element={<Home  personajes={personajes} eliminarCarta={eliminarCarta}/>}/>
      <Route path='/Formulario'element={<Formulario agregarCarta={agregarCarta} cantidadCartas={personajes.length}/>}/>
       
 

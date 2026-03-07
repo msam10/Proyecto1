@@ -1,20 +1,20 @@
 import { useState } from "react";
-import type { IPersonaje } from "../App";
+import type { IPersonaje } from "../Componentes/interfaces";
 import Cartadetalle from "../Componentes/Carta";
 import Modal from "../Componentes/Modal";
 import { Link } from "react-router";
 
 
-const Home = ({personajes}:{personajes: IPersonaje[]}) =>{
+const Home = ({personajes,eliminarCarta}:{personajes: IPersonaje[],eliminarCarta: (numero: number) => void} ) =>{
       const [personajeSeleccionado, setPersonajeSeleccionado] = useState<IPersonaje | null>(null);
-  const [busqueda, setBusqueda] = useState("");
-   const handleCardClick = (personaje: IPersonaje) => setPersonajeSeleccionado(personaje);
-  const handleCloseModal = () => setPersonajeSeleccionado(null);
+      const [busqueda, setBusqueda] = useState("");
+      const handleCardClick = (personaje: IPersonaje) => setPersonajeSeleccionado(personaje);
+      const handleCloseModal = () => setPersonajeSeleccionado(null);
     return (<>
           <Link to='/Formulario'><h1>Crear</h1></Link>
             <input
         type="text"
-        placeholder="Buscar personaje..."
+        placeholder="Buscar carta..."
         value={busqueda}
         onChange={(e) => setBusqueda(e.target.value)}
         className="w-96 p-3 mb-10 rounded-2xl text-center text-gray-800 placeholder-gray-500
@@ -45,7 +45,7 @@ const Home = ({personajes}:{personajes: IPersonaje[]}) =>{
                   imagen={personaje.imagen}
                   numero={personaje.numero}
                   vida={personaje.vida}
-                  eliminarCarta={personaje.eliminarCarta}  
+                  eliminarCarta={eliminarCarta}  
                   
                 />
               </div>

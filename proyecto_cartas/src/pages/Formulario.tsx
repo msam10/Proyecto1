@@ -1,15 +1,15 @@
 import { useState } from "react";
-import type { IPersonaje } from "../App";
+import type { IPersonaje } from "../Componentes/interfaces";
 import { Link } from "react-router";
 
 
-function Formulario({agregarCarta}:{agregarCarta: (personaje: IPersonaje) => void,cantidadCartas:number}) {
+function Formulario({agregarCarta,cantidadCartas}:{agregarCarta: (personaje: IPersonaje) => void,cantidadCartas:number}) {
 
 
   const [card,setCard] = useState<IPersonaje>({
    nombre:"",
    descripcion:"",
-   numero:0,
+   numero:cantidadCartas+1,
     tipo:"",
     ataque:0,
     defensa:0,
