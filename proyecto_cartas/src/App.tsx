@@ -118,8 +118,6 @@ const listaFiltrada =personajes.filter(personajes => personajes.numero !== numer
 
 setPersonajes(listaFiltrada)
 
-+
-
 }
   return (
      <div className="min-h-screen bg-linear-to-br from-amber-200 via-sky-200 to-amber-300 flex flex-col items-center py-12">
