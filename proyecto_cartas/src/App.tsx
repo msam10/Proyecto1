@@ -1,11 +1,9 @@
 
 import { useState , useEffect } from "react";
-import Cartadetalle from "./Componentes/Carta";
-import Modal from "./Componentes/Modal";
 import { Route, Routes } from "react-router";
 import Home from "./pages/Home";
 import Formulario from "./pages/Formulario";
-import { toCartaMap, type iApiCarta, type IPersonaje } from "./Componentes/interfaces";
+import { toApiCartaMap, toCartaMap, type iApiCarta, type IPersonaje } from "./Componentes/interfaces";
 
 
 const API_URL = import.meta.env.VITE_PROYECTO_CARTAS_API;
@@ -83,8 +81,33 @@ function App() {
   }, []);
 
 
+  const addCarta = async (personaje: IPersonaje) => {
+    try {
+      await fetch(`${API_URL}/card`, {
+        method: "POST",
+        headers: { 
+        "Content-Type": "application/json",
+        usersecretpasskey:"Sama477355EZ"},
+        body: JSON.stringify(toApiCartaMap(personaje)),
+      });
+      fetchTask();
+    } catch (e) {
+      console.error("Error adding task", e);
+    }}
 
-
+    const deleteCarta = async (numero: number) => {
+        try {
+           const listaFiltrada =personajes.filter(personajes => personajes.numero !== numero);
+            if (!listaFiltrada) return;  
+            await fetch(`${API_URL}/card/${numero}`, {
+                method: "DELETE",
+                headers: { usersecretpasskey:"Sama477355EZ"},
+            });
+            fetchTask();
+        } catch (e) {
+            console.error("Error updating carta:", e);  
+        }
+    };
  
 const  agregarCarta = (personaje:IPersonaje)=>{
   setPersonajes([...personajes,personaje])
@@ -95,14 +118,14 @@ const listaFiltrada =personajes.filter(personajes => personajes.numero !== numer
 
 setPersonajes(listaFiltrada)
 
-
++
 
 }
   return (
      <div className="min-h-screen bg-linear-to-br from-amber-200 via-sky-200 to-amber-300 flex flex-col items-center py-12">
        <Routes>
-     <Route path='/' element={<Home  personajes={personajes} eliminarCarta={eliminarCarta}/>}/>
-     <Route path='/Formulario'element={<Formulario agregarCarta={agregarCarta} cantidadCartas={personajes.length}/>}/>
+     <Route path='/' element={<Home  personajes={personajes} eliminarCarta={deleteCarta}/>}/>
+     <Route path='/Formulario'element={<Formulario agregarCarta={addCarta}  cantidadCartas={personajes.length}/>}/>
       
 
    </Routes>
