@@ -1,0 +1,222 @@
+import { useState } from "react";
+import type { IPersonaje } from "../Componentes/interfaces";
+import { Link , useParams} from "react-router";
+
+
+function ActualizarCard({actualizarCarta,personajes}:{actualizarCarta: (personaje: IPersonaje) => void, personajes:IPersonaje[]}) {
+    const parametros = useParams()
+    const id = parametros.numero
+    console.log(id);
+
+console.log(personajes);
+
+const personaje =  personajes.find((personaje)=> personaje.numero=== parseInt(id!))
+
+  const [card,setCard] = useState<IPersonaje>(personaje?personaje:{
+   nombre:"",
+   descripcion:"",
+   numero:2,
+    tipo:"",
+    ataque:0,
+    defensa:0,
+    imagen:"",
+    vida:0,
+    
+  });
+
+  const [errors,setErrors] = useState({
+     nombre:"",
+   descripcion:"",
+   numero:"",
+    tipo:"",
+    ataque:"",
+    defensa:"",
+    imagen:"",
+    
+});
+
+
+ const validateCard = (): boolean => {
+      let flag = true;
+      let nombreError = "";
+      let descripcionError = "";
+      let ataqueError = "";
+      let defensaError = "" ;
+      let tipoError = "";
+      let imagenError = "";
+
+      if(!card.nombre || card.nombre.length < 3 ) {
+        nombreError = "El nombre debe de tener al menos 3 caracteres";
+        flag = false;
+
+      }
+      if(!card.descripcion) {
+      descripcionError = "La descripcion es obligatoria";
+      flag = false;
+
+      }
+      if(!card.ataque || isNaN(card.ataque) || Number(card.ataque) < 0 ) {
+       ataqueError = "El ataque debe ser un numero positivo";
+      flag = false;
+
+      }
+      if(!card.defensa || isNaN(card.defensa) || Number(card.defensa) < 0 ) {
+       defensaError = "El defensa debe ser un numero positivo";
+      flag = false;
+
+      }
+      if(!card.tipo) {
+      tipoError = "El tipo es obligatorio";
+      flag = false;
+    
+      }
+      if(!card.imagen) {
+      imagenError = "La URL de la imagen es obligatoria";
+      window.alert(imagenError)
+      flag = false;
+    
+      }
+
+       setErrors({
+        nombre:nombreError,
+        descripcion:descripcionError,
+        tipo:tipoError,
+        ataque:ataqueError,
+        defensa:defensaError,
+        imagen:imagenError,
+        numero:'',
+        
+      
+      });
+
+      return flag;
+    };
+
+    const handleSubmit = () => {
+    console.log(validateCard());
+     if(validateCard()){
+      alert("enviando carta...");
+      actualizarCarta(card)
+     }
+
+
+    };
+
+
+    if (!card.nombre){
+        return <>No se encontro esa carta</>
+    }
+
+
+   
+
+
+  return (
+
+     <div>
+      <Link to='/'>
+      <h1>Volver</h1>
+      </Link>
+     <input type="text"
+     placeholder="nombre"
+     className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
+     value={card.nombre}
+     onChange={(e) => setCard({...card , nombre: e.target.value})}
+          onFocus={()=>{
+      setErrors({...errors, nombre :""})
+
+     }}
+
+     />
+
+     {errors.nombre && <p className="text-red-500">{errors.nombre}</p>}
+
+     <input type="text"
+     placeholder="descripcion"
+     className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
+     value={card.descripcion}
+     onChange={(e) => setCard({...card , descripcion: e.target.value})}
+          onFocus={()=>{
+      setErrors({...errors, descripcion:""})
+
+     }}
+
+      />
+      {errors.descripcion && <p className="text-red-500">{errors.descripcion}</p>}
+     
+     <input type="number"
+     placeholder="numero"
+     className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
+     value={card.numero}
+     onChange={(e) => setCard({...card , numero:Number( e.target.value)})}
+          onFocus={()=>{
+      setErrors({...errors, numero:""})
+
+     }}
+
+      /> 
+      {errors.numero && <p className="text-red-500">{errors.numero}</p>}
+
+      <input type="text"
+     placeholder="tipo"
+     className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
+     value={card.tipo}
+     onChange={(e) => setCard({...card , tipo: e.target.value})}
+          onFocus={()=>{
+      setErrors({...errors, tipo:""})
+
+     }}
+
+      /> 
+      {errors.tipo && <p className="text-red-500">{errors.tipo}</p>}
+
+      <input type="number"
+     placeholder="defensa"
+     className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
+     value={card.defensa}
+     onChange={(e) => setCard({...card , defensa:Number( e.target.value)})}
+          onFocus={()=>{
+      setErrors({...errors, defensa:""})
+
+     }}
+
+      />  
+      {errors.defensa && <p className="text-red-500">¨{errors.defensa}</p>}
+
+
+      <input type="number"
+     placeholder="ataque"
+     className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
+     value={card.ataque}
+     onChange={(e) => setCard({...card , ataque:Number(e.target.value)})}
+          onFocus={()=>{
+      setErrors({...errors, ataque:""})
+
+     }}
+
+      />
+      {errors.ataque && <p className="text-red-500">{errors.ataque}</p>}
+      
+      <input type="text"
+     placeholder="imagen"
+     className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
+     onFocus={()=>{
+      setErrors({...errors, imagen:""})
+
+     }}
+
+     value={card.imagen}
+     onChange={(e) => setCard({...card , imagen: e.target.value})}
+      />
+      {errors.imagen && <p className="text-red-500">{errors.imagen}</p>}
+    <button
+     className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"
+     onClick={handleSubmit}
+    >
+      Crear 
+    </button>
+
+
+     </div>
+     ) }  
+export default ActualizarCard;
