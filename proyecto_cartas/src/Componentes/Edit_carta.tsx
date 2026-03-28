@@ -1,222 +1,181 @@
 import { useState } from "react";
 import type { IPersonaje } from "../Componentes/interfaces";
-import { Link , useParams} from "react-router";
+import { Link, useParams, useNavigate } from "react-router";
 
+function ActualizarCard({ actualizarCarta, personajes }: { actualizarCarta: (personaje: IPersonaje) => void, personajes: IPersonaje[] }) {
+    const parametros = useParams();
+    const navigate = useNavigate();
+    const id = parametros.numero;
 
-function ActualizarCard({actualizarCarta,personajes}:{actualizarCarta: (personaje: IPersonaje) => void, personajes:IPersonaje[]}) {
-    const parametros = useParams()
-    const id = parametros.numero
-    console.log(id);
+    const personajeEncontrado = personajes.find((p) => p.numero === parseInt(id!));
 
-console.log(personajes);
+    const [card, setCard] = useState<IPersonaje>(personajeEncontrado ? personajeEncontrado : {
+        nombre: "",
+        descripcion: "",
+        numero: 0,
+        tipo: "",
+        ataque: 0,
+        defensa: 0,
+        imagen: "",
+        vida: 100,
+    });
 
-const personaje =  personajes.find((personaje)=> personaje.numero=== parseInt(id!))
+    const [errors, setErrors] = useState({
+        nombre: "",
+        descripcion: "",
+        tipo: "",
+        ataque: "",
+        defensa: "",
+        imagen: "",
+    });
 
-  const [card,setCard] = useState<IPersonaje>(personaje?personaje:{
-   nombre:"",
-   descripcion:"",
-   numero:2,
-    tipo:"",
-    ataque:0,
-    defensa:0,
-    imagen:"",
-    vida:0,
-    
-  });
+    const validateCard = (): boolean => {
+        let flag = true;
+        let newErrors = { nombre: "", descripcion: "", tipo: "", ataque: "", defensa: "", imagen: "" };
 
-  const [errors,setErrors] = useState({
-     nombre:"",
-   descripcion:"",
-   numero:"",
-    tipo:"",
-    ataque:"",
-    defensa:"",
-    imagen:"",
-    
-});
+        if (!card.nombre || card.nombre.length < 3) {
+            newErrors.nombre = "Mínimo 3 caracteres";
+            flag = false;
+        }
+        if (!card.descripcion) {
+            newErrors.descripcion = "La descripción es necesaria";
+            flag = false;
+        }
+        if (card.ataque < 0) {
+            newErrors.ataque = "Valor inválido";
+            flag = false;
+        }
+        if (card.defensa < 0) {
+            newErrors.defensa = "Valor inválido";
+            flag = false;
+        }
+        if (!card.tipo) {
+            newErrors.tipo = "El tipo es obligatorio";
+            flag = false;
+        }
+        if (!card.imagen) {
+            newErrors.imagen = "URL obligatoria";
+            flag = false;
+        }
 
-
- const validateCard = (): boolean => {
-      let flag = true;
-      let nombreError = "";
-      let descripcionError = "";
-      let ataqueError = "";
-      let defensaError = "" ;
-      let tipoError = "";
-      let imagenError = "";
-
-      if(!card.nombre || card.nombre.length < 3 ) {
-        nombreError = "El nombre debe de tener al menos 3 caracteres";
-        flag = false;
-
-      }
-      if(!card.descripcion) {
-      descripcionError = "La descripcion es obligatoria";
-      flag = false;
-
-      }
-      if(!card.ataque || isNaN(card.ataque) || Number(card.ataque) < 0 ) {
-       ataqueError = "El ataque debe ser un numero positivo";
-      flag = false;
-
-      }
-      if(!card.defensa || isNaN(card.defensa) || Number(card.defensa) < 0 ) {
-       defensaError = "El defensa debe ser un numero positivo";
-      flag = false;
-
-      }
-      if(!card.tipo) {
-      tipoError = "El tipo es obligatorio";
-      flag = false;
-    
-      }
-      if(!card.imagen) {
-      imagenError = "La URL de la imagen es obligatoria";
-      window.alert(imagenError)
-      flag = false;
-    
-      }
-
-       setErrors({
-        nombre:nombreError,
-        descripcion:descripcionError,
-        tipo:tipoError,
-        ataque:ataqueError,
-        defensa:defensaError,
-        imagen:imagenError,
-        numero:'',
-        
-      
-      });
-
-      return flag;
+        setErrors(newErrors);
+        return flag;
     };
 
     const handleSubmit = () => {
-    console.log(validateCard());
-     if(validateCard()){
-      alert("enviando carta...");
-      actualizarCarta(card)
-     }
-
-
+        if (validateCard()) {
+            actualizarCarta(card);
+            navigate("/"); // Redirigir al home tras actualizar
+        }
     };
 
-
-    if (!card.nombre){
-        return <>No se encontro esa carta</>
+    if (!personajeEncontrado) {
+        return (
+            <div className="flex flex-col items-center p-10">
+                <p className="text-gray-500 mb-4 font-bold">No se encontró esa carta</p>
+                <Link to="/" className="bg-gray-800 text-white p-3 rounded-xl px-6">Volver al inicio</Link>
+            </div>
+        );
     }
 
+    // Clases base del diseño anterior
+    const inputBase = "w-full p-3 rounded-2xl bg-amber-100/40 border border-amber-400/30 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-sky-300 transition-all shadow-sm";
+    const labelBase = "text-xs font-bold text-gray-700 uppercase ml-2 mb-1 block";
 
-   
+    return (
+        <div className="flex flex-col items-center p-8">
+            
+            <Link to="/" className="self-start mb-6 text-gray-800 font-bold hover:text-amber-600 transition-all">
+                ← VOLVER AL MAZO
+            </Link>
 
+            <div className="w-full max-w-2xl bg-white/80 backdrop-blur-md rounded-4xl p-8 border border-white shadow-xl">
+                
+                <h2 className="text-2xl font-black text-center mb-8 uppercase italic text-gray-800 tracking-tight">
+                    Editar Carta
+                </h2>
 
-  return (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    
+                    <div className="md:col-span-2">
+                        <label className={labelBase}>Nombre del Personaje</label>
+                        <input
+                            type="text"
+                            placeholder="Nombre"
+                            className={inputBase}
+                            value={card.nombre}
+                            onChange={(e) => setCard({ ...card, nombre: e.target.value })}
+                            onFocus={() => setErrors({ ...errors, nombre: "" })}
+                        />
+                        {errors.nombre && <p className="text-red-500 text-[10px] mt-1 font-bold italic uppercase ml-2">{errors.nombre}</p>}
+                    </div>
 
-     <div>
-      <Link to='/'>
-      <h1>Volver</h1>
-      </Link>
-     <input type="text"
-     placeholder="nombre"
-     className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
-     value={card.nombre}
-     onChange={(e) => setCard({...card , nombre: e.target.value})}
-          onFocus={()=>{
-      setErrors({...errors, nombre :""})
+                    <div>
+                        <label className={labelBase}>Tipo</label>
+                        <input
+                            type="text"
+                            className={inputBase}
+                            value={card.tipo}
+                            onChange={(e) => setCard({ ...card, tipo: e.target.value })}
+                            onFocus={() => setErrors({ ...errors, tipo: "" })}
+                        />
+                    </div>
 
-     }}
+                    <div>
+                        <label className={labelBase}>URL Imagen</label>
+                        <input
+                            type="text"
+                            className={inputBase}
+                            value={card.imagen}
+                            onChange={(e) => setCard({ ...card, imagen: e.target.value })}
+                            onFocus={() => setErrors({ ...errors, imagen: "" })}
+                        />
+                    </div>
 
-     />
+                    <div className="md:col-span-2">
+                        <label className={labelBase}>Descripción</label>
+                        <textarea
+                            className={`${inputBase} h-24 resize-none`}
+                            value={card.descripcion}
+                            onChange={(e) => setCard({ ...card, descripcion: e.target.value })}
+                            onFocus={() => setErrors({ ...errors, descripcion: "" })}
+                        />
+                    </div>
 
-     {errors.nombre && <p className="text-red-500">{errors.nombre}</p>}
+                    {/* Stats con colores de tu Home */}
+                    <div className="bg-amber-200/70 p-4 rounded-2xl border border-amber-300 shadow-sm">
+                        <label className="block text-center text-[10px] font-black uppercase mb-1">Ataque</label>
+                        <input
+                            type="number"
+                            className="w-full bg-transparent text-center text-3xl font-bold outline-none"
+                            value={card.ataque}
+                            onChange={(e) => setCard({ ...card, ataque: Number(e.target.value) })}
+                            onFocus={() => setErrors({ ...errors, ataque: "" })}
+                        />
+                    </div>
 
-     <input type="text"
-     placeholder="descripcion"
-     className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
-     value={card.descripcion}
-     onChange={(e) => setCard({...card , descripcion: e.target.value})}
-          onFocus={()=>{
-      setErrors({...errors, descripcion:""})
+                    <div className="bg-sky-200/70 p-4 rounded-2xl border border-sky-300 shadow-sm">
+                        <label className="block text-center text-[10px] font-black uppercase mb-1">Defensa</label>
+                        <input
+                            type="number"
+                            className="w-full bg-transparent text-center text-3xl font-bold outline-none"
+                            value={card.defensa}
+                            onChange={(e) => setCard({ ...card, defensa: Number(e.target.value) })}
+                            onFocus={() => setErrors({ ...errors, defensa: "" })}
+                        />
+                    </div>
 
-     }}
+                    <button
+                        onClick={handleSubmit}
+                        className="md:col-span-2 mt-4 bg-gray-800 text-white p-4 rounded-2xl font-black uppercase tracking-widest hover:bg-sky-500 transition-all active:scale-95 shadow-md"
+                    >
+                        Guardar Cambios
+                    </button>
 
-      />
-      {errors.descripcion && <p className="text-red-500">{errors.descripcion}</p>}
-     
-     <input type="number"
-     placeholder="numero"
-     className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
-     value={card.numero}
-     onChange={(e) => setCard({...card , numero:Number( e.target.value)})}
-          onFocus={()=>{
-      setErrors({...errors, numero:""})
+                </div>
+            </div>
+        </div>
+    );
+}
 
-     }}
-
-      /> 
-      {errors.numero && <p className="text-red-500">{errors.numero}</p>}
-
-      <input type="text"
-     placeholder="tipo"
-     className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
-     value={card.tipo}
-     onChange={(e) => setCard({...card , tipo: e.target.value})}
-          onFocus={()=>{
-      setErrors({...errors, tipo:""})
-
-     }}
-
-      /> 
-      {errors.tipo && <p className="text-red-500">{errors.tipo}</p>}
-
-      <input type="number"
-     placeholder="defensa"
-     className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
-     value={card.defensa}
-     onChange={(e) => setCard({...card , defensa:Number( e.target.value)})}
-          onFocus={()=>{
-      setErrors({...errors, defensa:""})
-
-     }}
-
-      />  
-      {errors.defensa && <p className="text-red-500">¨{errors.defensa}</p>}
-
-
-      <input type="number"
-     placeholder="ataque"
-     className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
-     value={card.ataque}
-     onChange={(e) => setCard({...card , ataque:Number(e.target.value)})}
-          onFocus={()=>{
-      setErrors({...errors, ataque:""})
-
-     }}
-
-      />
-      {errors.ataque && <p className="text-red-500">{errors.ataque}</p>}
-      
-      <input type="text"
-     placeholder="imagen"
-     className="border-2 border-indigo-500 outline-0 focus:border-indigo-700 rounder-nd p-2 w-full max-w-nd "
-     onFocus={()=>{
-      setErrors({...errors, imagen:""})
-
-     }}
-
-     value={card.imagen}
-     onChange={(e) => setCard({...card , imagen: e.target.value})}
-      />
-      {errors.imagen && <p className="text-red-500">{errors.imagen}</p>}
-    <button
-     className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"
-     onClick={handleSubmit}
-    >
-      Crear 
-    </button>
-
-
-     </div>
-     ) }  
 export default ActualizarCard;

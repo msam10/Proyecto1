@@ -37,11 +37,11 @@ function Formulario({ agregarCarta, cantidadCartas }: { agregarCarta: (personaje
       flag = false;
     }
     if (card.ataque < 0) {
-      newErrors.ataque = "Ataque inválido";
+      newErrors.ataque = "Valor inválido";
       flag = false;
     }
     if (card.defensa < 0) {
-      newErrors.defensa = "Defensa inválida";
+      newErrors.defensa = "Valor inválido";
       flag = false;
     }
     if (!card.tipo) {
@@ -49,7 +49,7 @@ function Formulario({ agregarCarta, cantidadCartas }: { agregarCarta: (personaje
       flag = false;
     }
     if (!card.imagen) {
-      newErrors.imagen = "URL de imagen obligatoria";
+      newErrors.imagen = "URL obligatoria";
       flag = false;
     }
 
@@ -60,117 +60,101 @@ function Formulario({ agregarCarta, cantidadCartas }: { agregarCarta: (personaje
   const handleSubmit = () => {
     if (validateCard()) {
       agregarCarta(card);
-      navigate("/"); // Redirige al home tras crear
+      navigate("/");
     }
   };
 
-  // Clases de estilo constantes
-  const inputClass = "w-full bg-white/60 border border-indigo-200 rounded-xl px-4 py-3 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all placeholder:text-slate-400 text-slate-700";
-  const labelClass = "text-sm font-bold text-indigo-900 mb-1 block ml-1 uppercase tracking-wider";
+  // Clases base para mantener la coherencia con tu Home
+  const inputBase = "w-full p-3 rounded-2xl bg-amber-100/40 border border-amber-400/30 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-sky-300 transition-all shadow-sm";
+  const labelBase = "text-xs font-bold text-gray-700 uppercase ml-2 mb-1 block";
 
   return (
-    <div className="w-full max-w-2xl px-4">
-      {/* Botón Volver */}
-      <Link to="/" className="inline-flex items-center text-indigo-700 hover:text-indigo-900 font-bold mb-6 group transition-all">
-        <span className="bg-white p-2 rounded-full shadow-md group-hover:scale-110 transition-transform mr-3">←</span>
-        VOLVER AL INICIO
+    <div className="flex flex-col items-center p-8">
+      
+      <Link to="/" className="self-start mb-6 text-gray-800 font-bold hover:text-amber-600 transition-all">
+        ← VOLVER AL MAZO
       </Link>
 
-      {/* Tarjeta del Formulario */}
-      <div className="bg-white/80 backdrop-blur-md rounded-[2.5rem] shadow-2xl border border-white p-8 md:p-12">
-        <div className="text-center mb-10">
-          <h2 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-sky-500 uppercase italic">
-            Nueva Carta
-          </h2>
-          <div className="h-1 w-20 bg-indigo-500 mx-auto mt-2 rounded-full"></div>
-        </div>
+      <div className="w-full max-w-2xl bg-white/80 backdrop-blur-md rounded-4xl p-8 border border-white shadow-xl">
+        
+        <h2 className="text-2xl font-black text-center mb-8 uppercase italic text-gray-800 tracking-tight">
+          Nueva Carta
+        </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Nombre */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          
           <div className="md:col-span-2">
-            <label className={labelClass}>Nombre del Personaje</label>
+            <label className={labelBase}>Nombre del Personaje</label>
             <input
               type="text"
-              placeholder="Ej: Shanks"
-              className={inputClass}
+              placeholder="Ej: Luffy"
+              className={inputBase}
               value={card.nombre}
               onChange={(e) => setCard({ ...card, nombre: e.target.value })}
-              onFocus={() => setErrors({ ...errors, nombre: "" })}
             />
-            {errors.nombre && <p className="text-red-500 text-xs mt-1 italic">{errors.nombre}</p>}
+            {errors.nombre && <p className="text-red-500 text-[10px] mt-1 font-bold italic uppercase ml-2">{errors.nombre}</p>}
           </div>
 
-          {/* Descripción */}
-          <div className="md:col-span-2">
-            <label className={labelClass}>Descripción / Lore</label>
-            <textarea
-              placeholder="Habla un poco sobre sus habilidades..."
-              className={`${inputClass} h-24 resize-none`}
-              value={card.descripcion}
-              onChange={(e) => setCard({ ...card, descripcion: e.target.value })}
-              onFocus={() => setErrors({ ...errors, descripcion: "" })}
-            />
-            {errors.descripcion && <p className="text-red-500 text-xs mt-1 italic">{errors.descripcion}</p>}
-          </div>
-
-          {/* Tipo */}
           <div>
-            <label className={labelClass}>Tipo</label>
+            <label className={labelBase}>Tipo</label>
             <input
               type="text"
-              placeholder="Ej: Pirata"
-              className={inputClass}
+              placeholder="Clase"
+              className={inputBase}
               value={card.tipo}
               onChange={(e) => setCard({ ...card, tipo: e.target.value })}
-              onFocus={() => setErrors({ ...errors, tipo: "" })}
             />
-            {errors.tipo && <p className="text-red-500 text-xs mt-1 italic">{errors.tipo}</p>}
           </div>
 
-          {/* Imagen URL */}
           <div>
-            <label className={labelClass}>Imagen (URL)</label>
+            <label className={labelBase}>URL Imagen</label>
             <input
               type="text"
-              placeholder="https://..."
-              className={inputClass}
+              placeholder="Link de imagen"
+              className={inputBase}
               value={card.imagen}
               onChange={(e) => setCard({ ...card, imagen: e.target.value })}
-              onFocus={() => setErrors({ ...errors, imagen: "" })}
             />
-            {errors.imagen && <p className="text-red-500 text-xs mt-1 italic">{errors.imagen}</p>}
           </div>
 
-          {/* Estadísticas en contenedores destacados */}
-          <div className="bg-indigo-600/5 p-4 rounded-2xl border border-indigo-100 group">
-            <label className={labelClass}>🔥 Ataque</label>
+          <div className="md:col-span-2">
+            <label className={labelBase}>Descripción</label>
+            <textarea
+              placeholder="Habilidades o historia..."
+              className={`${inputBase} h-24 resize-none`}
+              value={card.descripcion}
+              onChange={(e) => setCard({ ...card, descripcion: e.target.value })}
+            />
+          </div>
+
+          {/* Stats con los colores exactos de tus cartas en el Home */}
+          <div className="bg-amber-200/70 p-4 rounded-2xl border border-amber-300 shadow-sm">
+            <label className="block text-center text-[10px] font-black uppercase mb-1">Ataque</label>
             <input
               type="number"
-              className={`${inputClass} text-center font-bold text-lg`}
+              className="w-full bg-transparent text-center text-3xl font-bold outline-none"
               value={card.ataque}
               onChange={(e) => setCard({ ...card, ataque: Number(e.target.value) })}
             />
           </div>
 
-          <div className="bg-sky-600/5 p-4 rounded-2xl border border-sky-100">
-            <label className={labelClass}>🛡️ Defensa</label>
+          <div className="bg-sky-200/70 p-4 rounded-2xl border border-sky-300 shadow-sm">
+            <label className="block text-center text-[10px] font-black uppercase mb-1">Defensa</label>
             <input
               type="number"
-              className={`${inputClass} text-center font-bold text-lg`}
+              className="w-full bg-transparent text-center text-3xl font-bold outline-none"
               value={card.defensa}
               onChange={(e) => setCard({ ...card, defensa: Number(e.target.value) })}
             />
           </div>
 
-          {/* Botón Final */}
-          <div className="md:col-span-2 mt-4">
-            <button
-              onClick={handleSubmit}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black py-4 rounded-2xl shadow-xl shadow-indigo-200 transform transition hover:-translate-y-1 active:scale-95 uppercase tracking-widest"
-            >
-              ¡Añadir a la Tripulación!
-            </button>
-          </div>
+          <button
+            onClick={handleSubmit}
+            className="md:col-span-2 mt-4 bg-gray-800 text-white p-4 rounded-2xl font-black uppercase tracking-widest hover:bg-amber-500 transition-all active:scale-95 shadow-md"
+          >
+            Añadir al Mazo
+          </button>
+
         </div>
       </div>
     </div>

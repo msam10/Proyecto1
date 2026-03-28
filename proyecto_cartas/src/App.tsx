@@ -80,7 +80,7 @@ function App() {
   useEffect(() => {
     fetchTask();
   }, []);
-
+   
 
   const addCarta = async (personaje: IPersonaje) => {
     try {
