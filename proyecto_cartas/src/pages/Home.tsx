@@ -13,7 +13,6 @@ const Home = ({ personajes, eliminarCarta }: { personajes: IPersonaje[], elimina
   return (
     <div className="min-h-screen p-8 flex flex-col items-center">
       
-      {/* Barra superior con Buscador y Crear */}
       <div className="w-full max-w-5xl flex justify-center items-center gap-6 mb-12">
         <input
           type="text"
@@ -34,7 +33,7 @@ const Home = ({ personajes, eliminarCarta }: { personajes: IPersonaje[], elimina
         </Link>
       </div>
 
-      {/* Grid de Cartas */}
+     
       <div className="flex flex-wrap gap-10 justify-center">
         {personajes
           .filter((p) => p.nombre.toLowerCase().includes(busqueda.toLowerCase()))
@@ -48,17 +47,6 @@ const Home = ({ personajes, eliminarCarta }: { personajes: IPersonaje[], elimina
             >
               
             
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if(confirm('¿Eliminar personaje?')) eliminarCarta(personaje.numero);
-                }}
-                className="absolute top-5 right-5 z-10 bg-white/90 hover:bg-red-500 hover:text-white 
-                           text-red-500 w-9 h-9 rounded-full flex items-center justify-center 
-                           shadow-md border border-red-100 transition-all font-bold"
-              >
-                ✕
-              </button>
 
               <div onClick={() => setPersonajeSeleccionado(personaje)} className="h-full">
                 <div className="overflow-hidden rounded-2xl shadow-md h-[88%]">
