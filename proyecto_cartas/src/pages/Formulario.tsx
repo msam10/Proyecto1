@@ -12,7 +12,7 @@ function Formulario({ agregarCarta, cantidadCartas }: { agregarCarta: (personaje
     ataque: 0,
     defensa: 0,
     imagen: "",
-    vida: 100,
+    vida: 100, 
   });
 
   const [errors, setErrors] = useState({
@@ -21,12 +21,13 @@ function Formulario({ agregarCarta, cantidadCartas }: { agregarCarta: (personaje
     tipo: "",
     ataque: "",
     defensa: "",
+    vida: "",
     imagen: "",
   });
 
   const validateCard = (): boolean => {
     let flag = true;
-    let newErrors = { nombre: "", descripcion: "", tipo: "", ataque: "", defensa: "", imagen: "" };
+    let newErrors = { nombre: "", descripcion: "", tipo: "", ataque: "", defensa: "", vida: "", imagen: "" };
 
     if (!card.nombre || card.nombre.length < 3) {
       newErrors.nombre = "Mínimo 3 caracteres";
@@ -42,6 +43,11 @@ function Formulario({ agregarCarta, cantidadCartas }: { agregarCarta: (personaje
     }
     if (card.defensa < 0) {
       newErrors.defensa = "Valor inválido";
+      flag = false;
+    }
+  
+    if (card.vida <= 0) {
+      newErrors.vida = "Debe ser mayor a 0";
       flag = false;
     }
     if (!card.tipo) {
@@ -64,7 +70,6 @@ function Formulario({ agregarCarta, cantidadCartas }: { agregarCarta: (personaje
     }
   };
 
-  // Clases base para mantener la coherencia con tu Home
   const inputBase = "w-full p-3 rounded-2xl bg-amber-100/40 border border-amber-400/30 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-sky-300 transition-all shadow-sm";
   const labelBase = "text-xs font-bold text-gray-700 uppercase ml-2 mb-1 block";
 
@@ -127,7 +132,6 @@ function Formulario({ agregarCarta, cantidadCartas }: { agregarCarta: (personaje
             />
           </div>
 
-          {/* Stats con los colores exactos de tus cartas en el Home */}
           <div className="bg-amber-200/70 p-4 rounded-2xl border border-amber-300 shadow-sm">
             <label className="block text-center text-[10px] font-black uppercase mb-1">Ataque</label>
             <input
@@ -146,6 +150,18 @@ function Formulario({ agregarCarta, cantidadCartas }: { agregarCarta: (personaje
               value={card.defensa}
               onChange={(e) => setCard({ ...card, defensa: Number(e.target.value) })}
             />
+          </div>
+
+      
+          <div className="md:col-span-2 bg-emerald-200/70 p-4 rounded-2xl border border-emerald-300 shadow-sm">
+            <label className="block text-center text-[10px] font-black uppercase mb-1">Puntos de Vida:</label>
+            <input
+              type="number"
+              className="w-full bg-transparent text-center text-3xl font-bold outline-none"
+              value={card.vida}
+              onChange={(e) => setCard({ ...card, vida: Number(e.target.value) })}
+            />
+            {errors.vida && <p className="text-red-500 text-center text-[10px] font-bold italic uppercase">{errors.vida}</p>}
           </div>
 
           <button

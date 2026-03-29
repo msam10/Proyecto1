@@ -44,6 +44,23 @@ export const toApiCartaMap = (personaje:IPersonaje): iApiCarta => ({
 
 })
 
+export const toApiUpdateCartaMap = (personaje:IPersonaje): Omit<iApiCarta,"idCard"> => ({
+    name:personaje.nombre,
+    description:personaje.descripcion,
+    attack:personaje.ataque,
+    defense:personaje.defensa,
+    lifePoints:personaje.vida,
+    pictureUrl:personaje.imagen,
+    attributes:{
+        tipo:personaje.tipo
+    },
+    userSecret: "Sama477355EZ",
+    createdAt: new Date().toISOString(),
+    updatedAt:null,
+
+
+})
+
 export const toCartaMap = (apiCard: iApiCarta): IPersonaje => ({
 
     numero: parseInt(apiCard.idCard),
