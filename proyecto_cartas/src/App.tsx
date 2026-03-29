@@ -50,7 +50,7 @@ function App() {
   };
 
   const updateCarta = async (personaje: IPersonaje) => {
-    setLoading(true); // Iniciamos carga
+    setLoading(true); 
     try {
       await fetch(`${API_URL}/card/${personaje.numero}`, {
         method: "PATCH",
