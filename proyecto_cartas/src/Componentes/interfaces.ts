@@ -10,10 +10,11 @@ export interface IPersonaje {
 
 }
 
+
 export interface iApiCarta{
     "idCard": string,
       "name": string,
-      "description": string,
+      "description":string,
       "attack": number,
       "defense":number,
       "lifePoints": number,

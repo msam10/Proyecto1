@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Formulario from "./pages/Formulario";
 import { toApiCartaMap, toApiUpdateCartaMap, toCartaMap, type iApiCarta, type IPersonaje } from "./Componentes/interfaces";
 import Actualizarcard from "./Componentes/Edit_carta";
+import SeleccionarCartas from "./batalla/SeleccionarCartas";
 
 const API_URL = import.meta.env.VITE_PROYECTO_CARTAS_API;
 
@@ -99,6 +100,7 @@ function App() {
         <Route path='/' element={<Home personajes={personajes} eliminarCarta={deleteCarta} />} />
         <Route path='/Formulario' element={<Formulario agregarCarta={addCarta} cantidadCartas={personajes.length} />} />
         <Route path='/actualizar/:numero' element={<Actualizarcard actualizarCarta={updateCarta} personajes={personajes} />} />
+            <Route path='/seleccionar-cartas' element={<SeleccionarCartas mazo={personajes} loading={loading}/>}></Route>
       </Routes>
     </div>
   );
