@@ -100,7 +100,8 @@ function App() {
         <Route path='/' element={<Home personajes={personajes} eliminarCarta={deleteCarta} />} />
         <Route path='/Formulario' element={<Formulario agregarCarta={addCarta} cantidadCartas={personajes.length} />} />
         <Route path='/actualizar/:numero' element={<Actualizarcard actualizarCarta={updateCarta} personajes={personajes} />} />
-            <Route path='/seleccionar-cartas' element={<SeleccionarCartas mazo={personajes} loading={loading}/>}></Route>
+        <Route path='/seleccionar-cartas' element={<SeleccionarCartas mazo={personajes} loading={loading}/>}/>
+        <Route path="/campo-de-batalla/:id1/:id2" element={<CampoDeBatalla/>}/>
       </Routes>
     </div>
   );
