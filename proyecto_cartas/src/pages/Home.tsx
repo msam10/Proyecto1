@@ -31,6 +31,16 @@ const Home = ({ personajes, eliminarCarta }: { personajes: IPersonaje[], elimina
         >
           Crear
         </Link>
+
+
+        <Link 
+          to='seleccionar-cartas' 
+          className="bg-gradient-to-r from-sky-500 to-indigo-600 text-white px-8 py-3 rounded-2xl 
+                     font-bold uppercase tracking-widest shadow-lg transform transition-all 
+                     hover:scale-105 active:scale-95 hover:shadow-sky-500/40"
+        >
+          Ir a Batalla
+        </Link>
       </div>
 
      

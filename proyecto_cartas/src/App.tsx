@@ -5,6 +5,7 @@ import Formulario from "./pages/Formulario";
 import { toApiCartaMap, toApiUpdateCartaMap, toCartaMap, type iApiCarta, type IPersonaje } from "./Componentes/interfaces";
 import Actualizarcard from "./Componentes/Edit_carta";
 import SeleccionarCartas from "./batalla/SeleccionarCartas";
+import CampoDeBatalla from "./batalla/CampoDeBatalla";
 
 const API_URL = import.meta.env.VITE_PROYECTO_CARTAS_API;
 
