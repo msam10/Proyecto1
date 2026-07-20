@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from "react";
 import type { IPersonaje } from "../Componentes/interfaces";
 import Carta from "../Componentes/Carta";
 import { GiCrossedSwords, GiSkullCrossedBones, GiShipWheel, GiTreasureMap, GiPirateFlag, GiAnchor, GiWaveCrest, GiCompass } from "react-icons/gi";
-
 type Jugador = "p1" | "p2";
 
 type LogEntry = {
