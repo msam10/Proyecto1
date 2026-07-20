@@ -12,7 +12,7 @@ const Home = ({ personajes, eliminarCarta }: { personajes: IPersonaje[], elimina
 
   return (
     <div className="min-h-screen p-8 flex flex-col items-center">
-      
+
       <div className="w-full max-w-5xl flex justify-center items-center gap-6 mb-12">
         <input
           type="text"
@@ -23,8 +23,8 @@ const Home = ({ personajes, eliminarCarta }: { personajes: IPersonaje[], elimina
                      focus:outline-none focus:ring-4 focus:ring-sky-300 shadow-md transition-all font-medium"
         />
 
-        <Link 
-          to='/Formulario' 
+        <Link
+          to='/Formulario'
           className="bg-gradient-to-r from-sky-500 to-indigo-600 text-white px-8 py-3 rounded-2xl 
                      font-bold uppercase tracking-widest shadow-lg transform transition-all 
                      hover:scale-105 active:scale-95 hover:shadow-sky-500/40"
@@ -32,9 +32,16 @@ const Home = ({ personajes, eliminarCarta }: { personajes: IPersonaje[], elimina
           Crear
         </Link>
 
+        <Link
+          to="/crear-pirata"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-700 to-yellow-600 text-white font-bold rounded-xl border-2 border-amber-500/50 hover:from-amber-600 hover:to-yellow-500 transition-all shadow-lg hover:shadow-amber-500/30"
+        >
+          🏴‍☠️ Invocar Pirata con IA
+        </Link>
 
-        <Link 
-          to='seleccionar-cartas' 
+
+        <Link
+          to='seleccionar-cartas'
           className="bg-gradient-to-r from-sky-500 to-indigo-600 text-white px-8 py-3 rounded-2xl 
                      font-bold uppercase tracking-widest shadow-lg transform transition-all 
                      hover:scale-105 active:scale-95 hover:shadow-sky-500/40"
@@ -43,7 +50,7 @@ const Home = ({ personajes, eliminarCarta }: { personajes: IPersonaje[], elimina
         </Link>
       </div>
 
-     
+
       <div className="flex flex-wrap gap-10 justify-center">
         {personajes
           .filter((p) => p.nombre.toLowerCase().includes(busqueda.toLowerCase()))
@@ -55,25 +62,25 @@ const Home = ({ personajes, eliminarCarta }: { personajes: IPersonaje[], elimina
                          transform hover:scale-[1.03] hover:-translate-y-2 cursor-pointer 
                          transition-all overflow-hidden text-gray-800"
             >
-              
-            
+
+
 
               <div onClick={() => setPersonajeSeleccionado(personaje)} className="h-full">
                 <div className="overflow-hidden rounded-2xl shadow-md h-[88%]">
-                  <Cartadetalle 
+                  <Cartadetalle
                     ataque={personaje.ataque}
                     defensa={personaje.defensa}
                     nombre={personaje.nombre}
                     imagen={personaje.imagen}
                     numero={personaje.numero}
                     vida={personaje.vida}
-                    eliminarCarta={eliminarCarta} 
+                    eliminarCarta={eliminarCarta}
                   />
                 </div>
 
                 <div className="absolute bottom-4 left-0 w-full flex justify-between px-6 text-sm font-semibold text-gray-800">
                   <div className="bg-amber-200/80 px-3 py-1 pt-5 rounded-lg shadow-sm text-2xl">
-                     Ataque: {personaje.ataque}
+                    Ataque: {personaje.ataque}
                   </div>
                   <div className="bg-sky-200/80 px-3 py-1 pt-5 rounded-lg shadow-sm text-2xl">
                     Defensa: {personaje.defensa}

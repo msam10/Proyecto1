@@ -6,6 +6,7 @@ import { toApiCartaMap, toApiUpdateCartaMap, toCartaMap, type iApiCarta, type IP
 import Actualizarcard from "./Componentes/Edit_carta";
 import SeleccionarCartas from "./batalla/SeleccionarCartas";
 import CampoDeBatalla from "./batalla/CampoDeBatalla";
+import CalderoPirataIA from "./Componentes/CrearCartaIA";
 
 const API_URL = import.meta.env.VITE_PROYECTO_CARTAS_API;
 
@@ -103,6 +104,7 @@ function App() {
         <Route path='/actualizar/:numero' element={<Actualizarcard actualizarCarta={updateCarta} personajes={personajes} />} />
         <Route path='/seleccionar-cartas' element={<SeleccionarCartas mazo={personajes} loading={loading}/>}/>
         <Route path="/campo-de-batalla/:id1/:id2" element={<CampoDeBatalla/>}/>
+        <Route path="/crear-pirata" element={<CalderoPirataIA />} />
       </Routes>
     </div>
   );
