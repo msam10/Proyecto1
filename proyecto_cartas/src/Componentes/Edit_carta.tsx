@@ -32,7 +32,7 @@ function ActualizarCard({ actualizarCarta, personajes }: { actualizarCarta: (per
 
     const validateCard = (): boolean => {
         let flag = true;
-        let newErrors = { nombre: "", descripcion: "", tipo: "", ataque: "", defensa: "", vida: "", imagen: "" };
+        const newErrors = { nombre: "", descripcion: "", tipo: "", ataque: "", defensa: "", vida: "", imagen: "" };
 
         if (!card.nombre || card.nombre.length < 3) {
             newErrors.nombre = "Mínimo 3 caracteres";
