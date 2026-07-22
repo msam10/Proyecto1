@@ -190,7 +190,7 @@ function CampoDeBatalla() {
     const seleccionarFrase = (tipo: keyof typeof FRASES_PIRATAS) =>
         FRASES_PIRATAS[tipo][Math.floor(Math.random() * FRASES_PIRATAS[tipo].length)];
 
-    // Nueva fórmula de daño equilibrada
+    //fórmula de daño 
     const calcularDamage = (
         atacante: IPersonaje,
         defensor: IPersonaje,
@@ -418,9 +418,9 @@ function CampoDeBatalla() {
     };
 
     // === RENDERIZADO PRINCIPAL ===
-    if (loading) {
+   if (loading) {
         return (
-            <div className="min-h-screen w-full bg-gradient-to-b from-[#0a0520] via-[#1a1040] to-[#0c2b4a] flex items-center justify-center">
+            <div className="fixed inset-0 z-50 bg-gradient-to-b from-[#0a0520] via-[#1a1040] to-[#0c2b4a] flex items-center justify-center">
                 <div className="text-center">
                     <GiShipWheel
                         className="text-8xl text-amber-400 animate-spin mx-auto mb-6"
@@ -447,7 +447,7 @@ function CampoDeBatalla() {
 
     if (error) {
         return (
-            <div className="min-h-screen w-full bg-gradient-to-b from-[#0a0520] via-[#1a1040] to-[#0c2b4a] flex items-center justify-center p-4">
+            <div className="fixed inset-0 z-50 bg-gradient-to-b from-[#0a0520] via-[#1a1040] to-[#0c2b4a] flex items-center justify-center p-4">
                 <div className="bg-red-900/40 backdrop-blur-md rounded-xl p-8 max-w-md text-center shadow-2xl border-2 border-red-500/50">
                     <GiSkullCrossedBones className="text-8xl text-red-400 mx-auto mb-4 animate-bounce" />
                     <h2 className="text-3xl font-bold text-red-300 mb-4">
@@ -477,7 +477,7 @@ function CampoDeBatalla() {
     }
 
     return (
-        <div className="min-h-screen w-full bg-gradient-to-b from-[#0a0520] via-[#1a1040] to-[#0c2b4a] relative overflow-x-hidden">
+       <div className="fixed inset-0 w-screen h-screen z-[9999] bg-gradient-to-b from-[#0a0520] via-[#1a1040] to-[#0c2b4a] overflow-x-hidden overflow-y-auto">
             {/* Fondo decorativo */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden">
                 <div className="absolute bottom-0 left-0 right-0 h-32 opacity-10">

@@ -7,9 +7,9 @@ import {
     GiSwordWound,
     GiShieldBash,
     GiHeartBeats,
+    GiTreasureMap
 } from 'react-icons/gi';
 import type { IPersonaje } from './interfaces';
-import Carta from './Carta';
 
 const INGREDIENTES = [
     { icon: '🍎', texto: 'Fruta del Diablo' },
@@ -210,87 +210,77 @@ const CalderoPirataIA = () => {
                                 <GiPirateFlag className="text-3xl text-amber-400" />
                             </h3>
 
-                            <div className="grid gap-6 lg:grid-cols-[280px_1fr] items-start">
-                                {/* Carta visual */}
-                                <div className="mx-auto w-64">
-                                    <div className="rounded-2xl overflow-hidden border-2 border-amber-500/30 shadow-[0_0_25px_rgba(245,158,11,0.3)]">
-                                        <Carta
-                                            nombre={pirataGenerado.nombre}
-                                            ataque={pirataGenerado.ataque}
-                                            defensa={pirataGenerado.defensa}
-                                            vida={pirataGenerado.vida}
-                                            imagen={pirataGenerado.imagen}
-                                            numero={pirataGenerado.numero}
-                                            tipo={pirataGenerado.tipo}
-                                            descripcion={pirataGenerado.descripcion}
-                                            seleccionada={false}
-                                        />
-                                    </div>
-                                </div>
+                            <div className="grid gap-6 lg:grid-cols-[280px_1fr] items-stretch">
+                                
+                                {/* CARTA VISUAL (ESTILO BATALLA) */}
+                                <div className="mx-auto w-full max-w-[280px]">
+                                    <div className="flex flex-col bg-[#543618] rounded-xl overflow-hidden border-[3px] border-[#8b5a2b] shadow-[0_0_25px_rgba(245,158,11,0.2)] h-full">
+                                        
+                                        {/* Imagen y Nombre sobrepuesto */}
+                                        <div className="relative h-64 w-full border-b-[3px] border-[#3a220e]">
+                                            <img
+                                                src={pirataGenerado.imagen}
+                                                alt={pirataGenerado.nombre}
+                                                className="w-full h-full object-cover"
+                                            />
+                                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-3 pt-12">
+                                                <h3 className="text-white font-black text-lg leading-tight tracking-wide drop-shadow-md">
+                                                    {pirataGenerado.nombre}
+                                                </h3>
+                                            </div>
+                                        </div>
 
-                                {/* Detalles y acción */}
-                                <div className="space-y-5 bg-black/30 rounded-2xl border border-amber-500/20 p-5 backdrop-blur-sm">
-                                    <div>
-                                        <h4 className="text-xs font-bold text-amber-300 uppercase tracking-[0.2em] mb-3">
-                                            Estadísticas
-                                        </h4>
-                                        <div className="space-y-3">
-                                            <div className="flex items-center justify-between text-sm">
-                                                <span className="flex items-center gap-2 text-red-300">
-                                                    <GiSwordWound /> Ataque
+                                        {/* Estadísticas de la carta */}
+                                        <div className="p-4 flex flex-col gap-2.5">
+                                            <div className="flex justify-between items-center text-sm">
+                                                <span className="flex items-center gap-1.5 text-red-400 font-bold">
+                                                    <GiSwordWound className="text-lg" /> Ataque
                                                 </span>
-                                                <div className="flex items-center gap-2">
-                                                    <div className="w-32 bg-gray-800 rounded-full h-2">
-                                                        <div
-                                                            className="h-full rounded-full bg-red-500"
-                                                            style={{ width: `${Math.min(100, (pirataGenerado.ataque / 200) * 100)}%` }}
-                                                        />
-                                                    </div>
-                                                    <span className="font-bold text-white">{pirataGenerado.ataque}</span>
-                                                </div>
+                                                <span className="text-amber-50 font-bold">{pirataGenerado.ataque}</span>
                                             </div>
-                                            <div className="flex items-center justify-between text-sm">
-                                                <span className="flex items-center gap-2 text-blue-300">
-                                                    <GiShieldBash /> Defensa
+                                            
+                                            <div className="flex justify-between items-center text-sm">
+                                                <span className="flex items-center gap-1.5 text-blue-400 font-bold">
+                                                    <GiShieldBash className="text-lg" /> Defensa
                                                 </span>
-                                                <div className="flex items-center gap-2">
-                                                    <div className="w-32 bg-gray-800 rounded-full h-2">
-                                                        <div
-                                                            className="h-full rounded-full bg-blue-500"
-                                                            style={{ width: `${Math.min(100, (pirataGenerado.defensa / 200) * 100)}%` }}
-                                                        />
-                                                    </div>
-                                                    <span className="font-bold text-white">{pirataGenerado.defensa}</span>
-                                                </div>
+                                                <span className="text-amber-50 font-bold">{pirataGenerado.defensa}</span>
                                             </div>
-                                            <div className="flex items-center justify-between text-sm">
-                                                <span className="flex items-center gap-2 text-green-300">
-                                                    <GiHeartBeats /> Vida
+                                            
+                                            <div className="flex justify-between items-center text-sm">
+                                                <span className="flex items-center gap-1.5 text-red-500 font-bold">
+                                                    <GiHeartBeats className="text-lg" /> Vida
                                                 </span>
-                                                <div className="flex items-center gap-2">
-                                                    <div className="w-32 bg-gray-800 rounded-full h-2">
-                                                        <div
-                                                            className="h-full rounded-full bg-green-500"
-                                                            style={{ width: `${((pirataGenerado.vida) / (pirataGenerado.vidaMaxima || 100)) * 100}%` }}
-                                                        />
-                                                    </div>
-                                                    <span className="font-bold text-white">{pirataGenerado.vida}</span>
-                                                </div>
+                                                <span className="text-amber-50 font-bold">
+                                                    {pirataGenerado.vida}/{pirataGenerado.vidaMaxima}
+                                                </span>
+                                            </div>
+
+                                            {/* Barra de Vida Verde */}
+                                            <div className="w-full h-2.5 bg-[#2a1b0c] rounded-full overflow-hidden border border-[#1a0f05] mt-1 shadow-inner">
+                                                <div
+                                                    className="h-full bg-green-500 transition-all duration-500"
+                                                    style={{ width: `${Math.min(100, Math.max(0, (pirataGenerado.vida / (pirataGenerado.vidaMaxima || 100)) * 100))}%` }}
+                                                />
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div className="p-3 rounded-xl bg-black/40 border border-amber-500/10">
-                                        <p className="text-xs text-amber-300 uppercase tracking-wider mb-1">Historia</p>
-                                        <p className="text-sm text-amber-100 leading-relaxed italic">
+                                {/* HISTORIA Y ACCIÓN */}
+                                <div className="flex flex-col bg-black/30 rounded-2xl border border-amber-500/20 p-5 backdrop-blur-sm h-full">
+                                    <div className="flex-grow bg-black/40 rounded-xl border border-amber-500/10 p-5">
+                                        <h4 className="text-sm font-bold text-amber-300 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                                            <GiTreasureMap className="text-xl" /> Historia del Pirata
+                                        </h4>
+                                        <p className="text-base text-amber-100/90 leading-relaxed italic">
                                             “{pirataGenerado.descripcion}”
                                         </p>
                                     </div>
 
-                                    {/* Botón Ir al Mazo: solo navega, no guarda */}
+                                    {/* Botón Ir al Mazo */}
                                     <button
                                         onClick={() => navigate('/')}
-                                        className="w-full py-3 rounded-xl font-bold text-sm uppercase tracking-widest transition-all duration-300 bg-gradient-to-r from-amber-700 to-yellow-600 text-white shadow-[0_0_15px_rgba(245,158,11,0.4)] hover:shadow-[0_0_25px_rgba(245,158,11,0.7)] hover:scale-[1.02]"
+                                        className="mt-5 w-full py-3 rounded-xl font-bold text-sm uppercase tracking-widest transition-all duration-300 bg-gradient-to-r from-amber-700 to-yellow-600 text-white shadow-[0_0_15px_rgba(245,158,11,0.4)] hover:shadow-[0_0_25px_rgba(245,158,11,0.7)] hover:scale-[1.02]"
                                     >
                                         🏴‍☠️ Ir al Mazo
                                     </button>
